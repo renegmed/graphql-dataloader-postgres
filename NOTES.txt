@@ -5,3 +5,152 @@ Article: N+1 Queries in GraphQL Using PostgreSQL Window Functions
 Author: Tin Rabzelj
 URL: https://outcrawl.com/graphql-postgresql-window-functions
 
+Create User 
+
+mutation CreateUser {
+  createUser(
+    input: {name: "John Doe"}
+  ) {
+    id 
+    name     
+  }
+}
+
+Result:
+{
+  "data": {
+    "createUser": {
+      "id": "1gjbxSAWxMz3pMbeiwf9bKFOrlj",
+      "name": "John Doe"
+    }
+  }
+}
+
+Get Users
+
+query Users{
+  users(
+    pagination: { 
+      skip: 0,
+      take: 100
+    }
+  ){
+    id
+    name
+  }
+}
+
+Results:
+
+{
+  "data": {
+    "users": [
+      {
+        "id": "1gjbxSAWxMz3pMbeiwf9bKFOrlj",
+        "name": "John Doe"
+      },
+      {
+        "id": "1gjc4BKoCoFdG8e6INCyqIuo6oB",
+        "name": "Thezz Ash"
+      },
+      {
+        "id": "1gjc6abTu4usXgU9zCOgbKgIwvd",
+        "name": "Patrick Jones"
+      },
+      {
+        "id": "1gjcOY4xDoVq4giTYcLavhT0gyp",
+        "name": "Lucy Skies"
+      }
+    ]
+  }
+}
+
+
+
+Create Post 
+
+mutation CreatePost {
+  createPost(
+    input: {userId: "1gjbxSAWxMz3pMbeiwf9bKFOrlj", body: "John Doe post 1"}
+  ) {
+    id 
+    body 
+    createdAt
+    user{
+    	id
+      name
+    }
+  }
+}
+
+Result: 
+
+
+  "data": {
+    "createPost": {
+      "id": "1gjfBRGL47e5A76Kc98v2ApFEOd",
+      "body": "John Doe post 1",
+      "createdAt": "2020-08-28T16:39:46Z",
+      "user": {
+        "id": "1gjbxSAWxMz3pMbeiwf9bKFOrlj",
+        "name": "John Doe"
+      }
+    }
+  }
+}
+
+
+Get Posts 
+
+query Posts{
+  posts(
+    pagination: { 
+      skip: 0,
+      take: 100
+    }
+  ){
+    id
+    body 
+    createdAt
+    user {
+      id
+      name
+    }
+  }
+}
+
+Result: 
+
+{
+  "data": {
+    "posts": [
+      {
+        "id": "1gjfBRGL47e5A76Kc98v2ApFEOd",
+        "body": "John Doe post 1",
+        "createdAt": "2020-08-28T16:39:46Z",
+        "user": {
+          "id": "1gjbxSAWxMz3pMbeiwf9bKFOrlj",
+          "name": ""
+        }
+      },
+      {
+        "id": "1gjfPea9QtkgN6BbutCX6Ph1wXW",
+        "body": "John Doe post 2",
+        "createdAt": "2020-08-28T16:41:39Z",
+        "user": {
+          "id": "1gjbxSAWxMz3pMbeiwf9bKFOrlj",
+          "name": ""
+        }
+      },
+      {
+        "id": "1gjfQHrWSyJt9mIBHV2QEkGyjVA",
+        "body": "John Doe post 3",
+        "createdAt": "2020-08-28T16:41:44Z",
+        "user": {
+          "id": "1gjbxSAWxMz3pMbeiwf9bKFOrlj",
+          "name": ""
+        }
+      }
+    ]
+  }
+}
