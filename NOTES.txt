@@ -1,0 +1,7 @@
+Status: WIP
+
+
+Article: N+1 Queries in GraphQL Using PostgreSQL Window Functions
+Author: Tin Rabzelj
+URL: https://outcrawl.com/graphql-postgresql-window-functions
+

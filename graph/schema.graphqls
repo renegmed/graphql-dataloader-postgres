@@ -1,0 +1,38 @@
+scalar Time
+
+input Pagination {
+  skip: Int!
+  take: Int!
+}
+
+type User {
+    id: String!
+    name: String!
+    posts(pagination: Pagination): [Post!]!
+}
+
+type Post {
+    id: String!
+    body: String!
+    createdAt: Time!
+    user: User
+}
+
+input CreateUserInput {
+    name: String!
+}
+
+input CreatePostInput {
+    userId: String!
+    body: String!
+}
+
+type Mutation {
+    createUser(input: CreateUserInput!): User
+    createPost(input: CreatePostInput!): Post
+}
+
+type Query {
+    users(pagination: Pagination): [User!]!
+    posts(pagination: Pagination): [Post!]!
+}
